@@ -18,7 +18,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
     @Override
     public Member save(Member member) {
-        String sql = "insert into member(name) values(?)";
+        String sql = "insert into member(uuid, id, pw, nickname) values(?)";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -28,13 +28,13 @@ public class JdbcMemberRepository implements MemberRepository {
           conn = getConnection();
           pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-          pstmt.setString(1, member.getName());
+          pstmt.setString(1, member.getNickname());
 
           pstmt.executeUpdate();
           rs = pstmt.getGeneratedKeys();
 
           if (rs.next()){
-              member.setId(rs.getLong(1));
+              member.setId(rs.getString(1));
           }else {
               throw new SQLException("id 조회 실패");
           }
@@ -47,7 +47,7 @@ public class JdbcMemberRepository implements MemberRepository {
         }
     }
     @Override
-    public Optional<Member> findById(Long id) {
+    public Optional<Member> findById(String id) {
         String sql = "select * from member where id = ?";
 
         Connection conn = null;
@@ -57,14 +57,14 @@ public class JdbcMemberRepository implements MemberRepository {
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, id);
+            pstmt.setString(1, id);
 
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 Member member = new Member();
-                member.setId(rs.getLong("id"));
-                member.setName(rs.getString("name"));
+                member.setId(rs.getString("id"));
+                member.setNickname(rs.getString("name"));
                 return Optional.of(member);
             } else {
                 return Optional.empty();
@@ -93,13 +93,13 @@ public class JdbcMemberRepository implements MemberRepository {
             List<Member> members = new ArrayList<>();
 
             while(rs.next()){
-//                test
-                System.out.println("id : " + rs.getLong("id"));
-                System.out.println("id : " + rs.getString("name"));
+//                test 잘뜨는지 확인
+//                System.out.println("id : " + rs.getLong("id"));
+//                System.out.println("id : " + rs.getString("name"));
 
                 Member member = new Member();
-                member.setId(rs.getLong("id"));
-                member.setName(rs.getString("name"));
+                member.setId(rs.getString("id"));
+                member.setNickname(rs.getString("name"));
                 members.add(member);
 
             }
@@ -114,7 +114,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findByName(String name) {
-        String sql = "select * from member where name = ?";
+        String sql = "select * from members where name = ?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -129,8 +129,8 @@ public class JdbcMemberRepository implements MemberRepository {
 
             if (rs.next()){
                 Member member = new Member();
-                member.setId(rs.getLong("id"));
-                member.setName(rs.getString("name"));
+                member.setId(rs.getString("id"));
+                member.setNickname(rs.getString("name"));
                 return Optional.of(member);
             }
 

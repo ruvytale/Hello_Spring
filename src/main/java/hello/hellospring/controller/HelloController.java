@@ -8,20 +8,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+// Spring 첫 시작 API 사용법 튜토리얼
 @Controller
 public class HelloController {
 
     @GetMapping("hello")
     public String hello(Model model){
         model.addAttribute("data", "hello!!");
-        return "hello";
+        return "hello/hello";
     }
 
     @GetMapping("hello-mvc")
     public String helloMvc(@RequestParam("name") String name, Model model){
         model.addAttribute("name", name);
 
-        return "hello-template";
+        return "hello/hello-template";
     }
 
     @GetMapping("hello-string")
@@ -30,6 +31,8 @@ public class HelloController {
         return "hello " + name;
     }
 
+
+//    이방식은 JSON 처리를 위한 API이다.
     @GetMapping("hello-api")
     @ResponseBody
     public Hello helloApi(@RequestParam("name") String name){

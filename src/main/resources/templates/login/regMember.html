@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+</head>
+<body>
+  <div id="reg">
+    <from method="post" action="./regMember/create" name="CreateLoginForm">
+      <header>
+        <h2>회원가입을 환영합니다.</h2>
+      </header>
+        <div id="container">
+            <div class="userInput">
+                <h5>ID</h5>
+                <input type="text" id="id" name="id" class="id input">
+            </div>
+
+            <div class="passwordInput">
+                <h5>비밀번호</h5>
+                <input type="password" id="pw" name="pw" class="pw input">
+            </div>
+
+            <div class="passwodCheck">
+                <h5>비밀번호 확인</h5>
+                <input type="password" id="pwCheck" name="pwCheck" class="pw input">
+            </div>
+
+            <div class="nickInput">
+                <h5>닉네임</h5>
+                <input type="text" id="nickName" name="nickName" class="nick input">
+            </div>
+
+        </div>
+        <button type="submit" class="btn">Submit</button>
+    </from>
+  </div>
+
+    <div>
+        <a href="/home">돌아 가기</a>
+    </div>
+</body>
+</html>

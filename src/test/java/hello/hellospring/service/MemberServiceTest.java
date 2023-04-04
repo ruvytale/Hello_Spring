@@ -28,22 +28,22 @@ class MemberServiceTest {
     @Test
     public void 회원가입() throws Exception {
         Member member = new Member();
-        member.setName("hello");
+        member.setNickname("hello");
 
-        Long saveId = memberService.join(member);
+        String saveId = memberService.join(member);
 
         Member findMember = memberRepository.findById(saveId).get();
-        assertEquals(member.getName(), findMember.getName());
+        assertEquals(member.getNickname(), findMember.getNickname());
     }
 
     @Test
     public void 중복회원_예외처리() throws Exception {
 
         Member member1 = new Member();
-        member1.setName("spring");
+        member1.setNickname("spring");
 
         Member member2 = new Member();
-        member2.setName("spring");
+        member2.setNickname("spring");
 
         memberService.join(member1);
         IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));

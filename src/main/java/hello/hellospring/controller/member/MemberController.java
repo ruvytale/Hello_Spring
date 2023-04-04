@@ -1,4 +1,4 @@
-package hello.hellospring.controller;
+package hello.hellospring.controller.member;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.service.MemberService;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -28,8 +29,6 @@ public class MemberController {
     @PostMapping(value = "/members/new")
     public String create(MemberForm form){
         Member member = new Member();
-        member.setName(form.getName());
-
         memberService.join(member);
 
         return "redirect:/";
